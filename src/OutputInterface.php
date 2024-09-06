@@ -5,6 +5,7 @@ namespace DevCoder\Console;
 interface OutputInterface
 {
     public function write(string $message, ?string $color = null, ?string $background = null): void;
+    public function writeln(string $message): void;
 
     public function success(string $message): void;
 

@@ -17,5 +17,5 @@ if (file_exists(dirname(__DIR__) . '/../../autoload.php')) {
 }
 
 
-$app = new \DevCoder\Console\Application([]);
+$app = new \DevCoder\Console\CommandRunner([]);
 $app->run(new \DevCoder\Console\Input());

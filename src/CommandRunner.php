@@ -7,21 +7,21 @@ namespace DevCoder\Console;
 use DevCoder\Console\Command\CommandInterface;
 use DevCoder\Console\Command\HelpCommand;
 
-class Application
+class CommandRunner
 {
     /**
      * @var CommandInterface[]
      */
-    private $commands = [];
+    private array $commands = [];
 
     /**
      * @var CommandInterface
      */
-    private $defaultCommand;
+    private CommandInterface $defaultCommand;
 
     /**
      * Application constructor.
-     * @param CommandInterface[]
+     * @param CommandInterface[] $commands
      */
     public function __construct(array $commands)
     {
@@ -35,21 +35,21 @@ class Application
 
         try  {
 
-            if ($input->getCommandeName() === null) {
+            if ($input->getCommandName() === null) {
                 $this->defaultCommand->execute($input);
                 return;
             }
 
             $command = null;
             foreach ($this->commands as $currentCommand) {
-                if ($currentCommand->getName() === $input->getCommandeName()) {
+                if ($currentCommand->getName() === $input->getCommandName()) {
                     $command = $currentCommand;
                     break;
                 }
             }
 
             if ($command === null) {
-                throw new \InvalidArgumentException(sprintf('Command "%s" is not defined.', $input->getCommandeName()));
+                throw new \InvalidArgumentException(sprintf('Command "%s" is not defined.', $input->getCommandName()));
             }
 
             $command->execute($input);

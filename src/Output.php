@@ -40,16 +40,26 @@ class Output implements OutputInterface
      */
     public function write(string $message, ?string $color = null, ?string $background = null): void
     {
-        $string = '';
+        $formattedMessage = '';
+
         if ($color) {
-            $string .= "\033[" . static::FOREGROUND_COLORS[$color] . 'm';
+            $formattedMessage .= "\033[" . static::FOREGROUND_COLORS[$color] . 'm';
+        }
+        if ($background) {
+            $formattedMessage .= "\033[" . static::BG_COLORS[$background] . 'm';
         }
 
-        if ($background) {
-            $string .= "\033[" . static::BG_COLORS[$background] . 'm';
-        }
-        echo $string . $message . "\033[0m";
+        $formattedMessage .= $message . "\033[0m";
+
+        fwrite(STDOUT, $formattedMessage);
     }
+
+    public function writeln(string $message): void
+    {
+        $this->write($message);
+        $this->write(\PHP_EOL);
+    }
+
 
     /**
      * {@inheritdoc}

@@ -7,9 +7,9 @@ class Input implements InputInterface
     /**
      * @var string|null
      */
-    private $cmdName;
-
-    private $options = [];
+    private ?string $cmdName;
+    private array $options = [];
+    private array $arguments = [];
 
     public function __construct(array $argv = null)
     {
@@ -22,12 +22,12 @@ class Input implements InputInterface
                 continue;
             }
             
-            $it = explode("=", $argv[$key]);
+            $it = explode("=", $value);
             $this->options[$it[0]] = array_key_exists(1, $it) ? $it[1] : true;
         }
     }
 
-    public function getCommandeName(): ?string
+    public function getCommandName(): ?string
     {
         return $this->cmdName;
     }
@@ -35,5 +35,10 @@ class Input implements InputInterface
     public function getOptions(): array
     {
         return $this->options;
+    }
+
+    public function getArguments(): array
+    {
+        return $this->arguments;
     }
 }

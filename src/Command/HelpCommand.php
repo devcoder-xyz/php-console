@@ -12,7 +12,7 @@ class HelpCommand implements CommandInterface
     /**
      * @var CommandInterface[]
      */
-    private $commands;
+    private array $commands;
 
     public function getName(): string
     {
@@ -21,13 +21,13 @@ class HelpCommand implements CommandInterface
 
     public function getDescription(): string
     {
-        return 'Lists commands';
+        return 'Displays a list of available commands and their descriptions.';
     }
 
-    public function execute(InputInterface $input)
+    public function execute(InputInterface $input): void
     {
         $output = new Output();
-        $output->write('Available commands:', 'blue');
+        $output->write('List of Available Commands:', 'blue');
         $output->write(\PHP_EOL);
         foreach ($this->commands as $command) {
             $output->write(sprintf('  %s : ', $command->getName()), 'green');
@@ -42,5 +42,15 @@ class HelpCommand implements CommandInterface
     public function setCommands(array $commands)
     {
         $this->commands = $commands;
+    }
+
+    public function getOptions(): array
+    {
+        return [];
+    }
+
+    public function getArguments(): array
+    {
+        return [];
     }
 }
